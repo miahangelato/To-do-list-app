@@ -1,0 +1,256 @@
+# =============================================
+# Git Ignore - Full Stack Todo Application
+# =============================================
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Node.js Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build Outputs
+dist/
+build/
+.next/
+.nuxt/
+.vuepress/dist/
+
+# Runtime Data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage Directory
+coverage/
+*.lcov
+.nyc_output/
+
+# ESLint Cache
+.eslintcache
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache
+.cache
+.parcel-cache
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Vite
+.vite/
+
+# TypeScript
+*.tsbuildinfo
+
+# =============================================
+# Database Files
+# =============================================
+
+# SQLite
+*.db
+*.sqlite
+*.sqlite3
+*.database
+
+# PostgreSQL
+*.dump
+
+# Database backups
+*.sql.backup
+backup_*.sql
+
+# =============================================
+# Docker & Containers
+# =============================================
+
+# Docker volumes (optional - comment out if you want to track)
+# docker-compose.override.yml
+
+# Container logs
+*.log
+
+# =============================================
+# Operating System
+# =============================================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# =============================================
+# IDE & Editors
+# =============================================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+
+# =============================================
+# Temporary Files
+# =============================================
+
+# Temporary folders
+tmp/
+temp/
+.tmp/
+.temp/
+
+# Log files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =============================================
+# Security & Secrets
+# =============================================
+
+# Private keys
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Certificates
+*.crt
+*.cert
+
+# JWT secrets
+jwt-secret*
+
+# API keys file (if any)
+api-keys.json
+secrets.json
+
+# =============================================
+# Application Specific
+# =============================================
+
+# Uploads directory (if you have file uploads)
+uploads/
+public/uploads/
+
+# Generated Prisma client (optional - usually regenerated)
+# prisma/generated/
+
+# Test coverage
+coverage/
+test-coverage/
+
+# Documentation build
+docs/build/
+
+# =============================================
+# Miscellaneous
+# =============================================
+
+# Backup files
+*.backup
+*.bak
+*.old
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Package files
+*.deb
+*.rpm
+*.pkg
+*.dmg
+*.msi
+
+# Runtime configuration
+.runtime
+
+# Local configuration overrides
+config.local.js
+config.local.json
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json

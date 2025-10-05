@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # Database
+  database:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: todo_user
+      POSTGRES_PASSWORD: todo_password
+      POSTGRES_DB: todo_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # Backend
+  backend:
+    build: ./BE/my-express-app
+    environment:
+      - DATABASE_URL=postgresql://todo_user:todo_password@database:5432/todo_db?schema=public
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+
+  # Frontend
+  frontend:
+    build: ./FE/my-react-app
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
