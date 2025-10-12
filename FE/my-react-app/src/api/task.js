@@ -5,7 +5,7 @@ import {
   CREATE_TASK, 
   UPDATE_TASK, 
   DELETE_TASK 
-} from '../constant/TaskConstant';
+} from '../constant/taskConstant';
 
 // Helper function to get user email from localStorage
 const getUserEmail = () => {
@@ -20,10 +20,25 @@ const getHeaders = () => {
 };
 
 export const getAllTasks = async () => {
-  const response = await axios.get(GET_ALL_TASKS, {
-    headers: getHeaders()
-  });
-  return response.data;
+  try {
+    console.log('Fetching tasks from:', GET_ALL_TASKS);
+    console.log('Headers:', getHeaders());
+    
+    const response = await axios.get(GET_ALL_TASKS, {
+      headers: getHeaders()
+    });
+    
+    console.log('Tasks response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Get tasks error:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status,
+      url: error.config?.url
+    });
+    throw error;
+  }
 };
 
 export const getTask = async (id) => {
@@ -53,23 +68,3 @@ export const deleteTask = async (id) => {
   });
   return response.data;
 };
-
-export const toggleTask = async (id, completed) => {
-  const response = await axios.put(UPDATE_TASK(id), { completed }, {
-    headers: getHeaders()
-  });
-  return response.data;
-};
-
-// Export as TaskAPI object for easier importing
-export const TaskAPI = {
-  getAllTasks,
-  getTask,
-  createTask,
-  updateTask,
-  deleteTask,
-  toggleTask
-};
-
-// Also export as default for easier importing
-export default TaskAPI;

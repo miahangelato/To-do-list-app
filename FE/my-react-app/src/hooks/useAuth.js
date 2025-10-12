@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { loginUser, registerUser, logoutUser } from '../api/UserAPI'
-import { USER_STATUS, STORAGE_KEYS } from '../constant/UserConstant'
+import { loginUser, registerUser, logoutUser } from '../api/user'
+import { USER_STATUS, STORAGE_KEYS } from '../constant/userConstant'
 
 export const useAuth = () => {
   const [user, setUser] = useState(null)
@@ -73,24 +73,23 @@ export const useAuth = () => {
 
   const handleLogout = async () => {
     setLoading(true)
-    setError(null)
 
     try {
       await logoutUser()
     } catch (err) {
       console.error('Logout error:', err)
     } finally {
-      // Clear localStorage and state regardless of API call success
+      // Clear local state regardless of API call result
       localStorage.removeItem(STORAGE_KEYS.USER)
       setUser(null)
       setStatus(USER_STATUS.IDLE)
+      setError(null)
       setLoading(false)
     }
   }
 
   const clearError = () => {
     setError(null)
-    setStatus(USER_STATUS.IDLE)
   }
 
   const isAuthenticated = !!user
@@ -101,12 +100,6 @@ export const useAuth = () => {
     error,
     status,
     isAuthenticated,
-    
-    setUser,
-    setLoading,
-    setError,
-    setStatus,
-    
     handleLogin,
     handleRegister,
     handleLogout,

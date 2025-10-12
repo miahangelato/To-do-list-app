@@ -1,13 +1,15 @@
-import { useTaskContext } from '../context/TaskContext'
-import { TASK_FILTERS } from '../constant/TaskConstant'
+"use client"
+
+import { useTaskContext } from "../../context/TaskContext"
+import { TASK_FILTERS } from "../../constant/taskConstant"
 
 const TaskFilter = () => {
   const { filter, setFilter, stats } = useTaskContext()
 
   const filterButtons = [
-    { key: TASK_FILTERS.ALL, label: 'All Tasks', count: stats.total, icon: '📋' },
-    { key: TASK_FILTERS.ACTIVE, label: 'Active', count: stats.pending, icon: '⏳' },
-    { key: TASK_FILTERS.COMPLETED, label: 'Completed', count: stats.completed, icon: '✅' }
+    { key: TASK_FILTERS.ALL, label: "All Tasks", count: stats.total, icon: "📋" },
+    { key: TASK_FILTERS.ACTIVE, label: "Active", count: stats.pending, icon: "⏳" },
+    { key: TASK_FILTERS.COMPLETED, label: "Completed", count: stats.completed, icon: "✅" },
   ]
 
   return (
@@ -21,14 +23,10 @@ const TaskFilter = () => {
           </span>
         </div>
       </div>
-      
+
       <div className="filter-buttons">
         {filterButtons.map(({ key, label, count, icon }) => (
-          <button
-            key={key}
-            onClick={() => setFilter(key)}
-            className={`filter-btn ${filter === key ? 'active' : ''}`}
-          >
+          <button key={key} onClick={() => setFilter(key)} className={`filter-btn ${filter === key ? "active" : ""}`}>
             <span className="btn-icon">{icon}</span>
             <div className="btn-content">
               <span className="btn-label">{label}</span>

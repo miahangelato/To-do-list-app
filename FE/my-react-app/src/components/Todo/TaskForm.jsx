@@ -1,11 +1,13 @@
 import { useState } from 'react'
-import { useTaskContext } from '../context/TaskContext'
+import { useTaskContext } from '../../context/TaskContext'
 
 const TaskForm = () => {
   const { createTask, loading } = useTaskContext()
   const [formData, setFormData] = useState({
     title: '',
-    description: ''
+    description: '',
+    dueDate: '',
+    dueTime: ''
   })
   const [validationError, setValidationError] = useState('')
 
@@ -24,6 +26,14 @@ const TaskForm = () => {
       setValidationError('Task title is required')
       return false
     }
+    if (!formData.dueDate) {
+      setValidationError('Due date is required')
+      return false
+    }
+    if (!formData.dueTime) {
+      setValidationError('Due time is required')
+      return false
+    }
     return true
   }
 
@@ -32,13 +42,18 @@ const TaskForm = () => {
     
     if (!validateForm()) return
     
+    // Combine date and time (both are now required)
+    const dateTime = `${formData.dueDate}T${formData.dueTime}:00`
+    const dueDateTimeISO = new Date(dateTime).toISOString()
+    
     const result = await createTask({
       title: formData.title.trim(),
-      description: formData.description.trim() || null
+      description: formData.description.trim() || null,
+      dueDate: dueDateTimeISO
     })
     
     if (result.success) {
-      setFormData({ title: '', description: '' })
+      setFormData({ title: '', description: '', dueDate: '', dueTime: '' })
       setValidationError('')
     }
   }
@@ -81,6 +96,40 @@ const TaskForm = () => {
             />
             <label htmlFor="description" className="neon-label">Description (Optional)</label>
             <span className="input-line"></span>
+          </div>
+        </div>
+        
+        <div className="form-row">
+          <div className="form-group">
+            <div className="input-wrapper">
+              <input
+                id="dueDate"
+                name="dueDate"
+                type="date"
+                value={formData.dueDate}
+                onChange={handleInputChange}
+                className="neon-input"
+                required
+              />
+              <label htmlFor="dueDate" className="neon-label">Due Date *</label>
+              <span className="input-line"></span>
+            </div>
+          </div>
+          
+          <div className="form-group">
+            <div className="input-wrapper">
+              <input
+                id="dueTime"
+                name="dueTime"
+                type="time"
+                value={formData.dueTime}
+                onChange={handleInputChange}
+                className="neon-input"
+                required
+              />
+              <label htmlFor="dueTime" className="neon-label">Due Time *</label>
+              <span className="input-line"></span>
+            </div>
           </div>
         </div>
         

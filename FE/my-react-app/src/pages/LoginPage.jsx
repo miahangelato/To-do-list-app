@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useUserContext } from '../context/UserContext'
-import LoginForm from '../components/Loginform'
+import LoginForm from '../components/Auth/LoginForm'
 import '../styles/LoginPage.css'
 
 const LoginPage = () => {
