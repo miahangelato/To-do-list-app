@@ -1,36 +1,53 @@
-version: '3.8'
+version: "3.9"
 
 services:
-  # Database
-  database:
-    image: postgres:15-alpine
+  db:
+    image: postgres:16
+    container_name: todolist_db
     environment:
-      POSTGRES_USER: todo_user
-      POSTGRES_PASSWORD: todo_password
-      POSTGRES_DB: todo_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123ediwow
+      POSTGRES_DB: softdev3-final
+    ports:
+      - "5431:5432" # host:container (use 5431 to avoid conflict with local postgres)
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+    restart: always
 
-  # Backend
   backend:
-    build: ./BE/my-express-app
-    environment:
-      - DATABASE_URL=postgresql://todo_user:todo_password@database:5432/todo_db?schema=public
-      - PORT=3000
+    image: node:20
+    container_name: todolist_backend
+    working_dir: /usr/src/app
+    command: sh -c "npm install && npx prisma migrate deploy && npx prisma generate && npm run dev"
+    volumes:
+      - ./BE/my-express-app:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
       - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:123ediwow@db:5432/softdev3-final?schema=public
+      - NODE_ENV=development
+      - PORT=3000
     depends_on:
-      - database
+      - db
+    restart: unless-stopped
 
-  # Frontend
   frontend:
-    build: ./FE/my-react-app
+    image: node:20
+    container_name: todolist_frontend
+    working_dir: /usr/src/app
+    command: sh -c "npm install && npm run dev -- --host"
+    volumes:
+      - ./FE/my-react-app:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
-      - "80:80"
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+      - VITE_API_BASE_URL=http://localhost:3000
     depends_on:
       - backend
+    restart: unless-stopped
 
 volumes:
   postgres_data:

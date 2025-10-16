@@ -71,8 +71,6 @@ app.use((req, res) => {
 
 // Global error handler
 app.use((error, req, res, next) => {
-  console.error('Global error handler:', error);
-  
   res.status(error.status || 500).json({
     error: error.message || 'Internal Server Error',
     timestamp: new Date().toISOString()

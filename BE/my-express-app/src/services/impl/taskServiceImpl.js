@@ -1,10 +1,11 @@
+import { TaskService } from '../taskService.js';
 import { TaskRepositoryImpl } from '../../repositories/impl/taskRepositoryImpl.js';
 import { UserRepositoryImpl } from '../../repositories/impl/userRepositoryImpl.js';
 
 const taskRepo = new TaskRepositoryImpl();
 const userRepo = new UserRepositoryImpl();
 
-export class TaskServiceImpl {
+export class TaskServiceImpl extends TaskService {
   async getTasks() {
     return taskRepo.findAll();
   }

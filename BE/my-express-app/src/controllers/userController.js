@@ -44,7 +44,6 @@ export const register = async (req, res) => {
       });
     }
 
-    console.error('Registration error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error'
@@ -81,7 +80,6 @@ export const login = async (req, res) => {
       });
     }
 
-    console.error('Login error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error'
@@ -97,7 +95,6 @@ export const logout = async (req, res) => {
       message: 'Logout successful'
     });
   } catch (error) {
-    console.error('Logout error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error'
@@ -116,7 +113,6 @@ export const getUsers = async (req, res) => {
       users: usersWithoutPasswords
     });
   } catch (error) {
-    console.error('Get users error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error'
@@ -142,7 +138,6 @@ export const getUserById = async (req, res) => {
       user: excludePassword(user)
     });
   } catch (error) {
-    console.error('Get user by ID error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error'
@@ -164,7 +159,6 @@ export const updateUser = async (req, res) => {
       user: excludePassword(user)
     });
   } catch (error) {
-    console.error('Update user error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error'
@@ -183,7 +177,6 @@ export const deleteUser = async (req, res) => {
       message: 'User deleted successfully'
     });
   } catch (error) {
-    console.error('Delete user error:', error);
     res.status(500).json({
       success: false,
       message: 'Internal server error'

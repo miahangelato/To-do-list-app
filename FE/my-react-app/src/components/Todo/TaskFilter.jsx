@@ -1,7 +1,7 @@
 "use client"
 
 import { useTaskContext } from "../../context/TaskContext"
-import { TASK_FILTERS } from "../../constant/taskConstant"
+import { TASK_FILTERS } from "../../constant/TaskConstant"
 
 const TaskFilter = () => {
   const { filter, setFilter, stats } = useTaskContext()

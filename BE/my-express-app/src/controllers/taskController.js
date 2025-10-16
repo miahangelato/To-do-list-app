@@ -39,7 +39,6 @@ class TaskController {
         return res.status(404).json({ error: error.message });
       }
       
-      console.error('Get all tasks error:', error);
       res.status(500).json({ error: 'Failed to fetch tasks' });
     }
   }
@@ -70,7 +69,6 @@ class TaskController {
         return res.status(404).json({ error: error.message });
       }
       
-      console.error('Get task by ID error:', error);
       res.status(500).json({ error: 'Failed to fetch task' });
     }
   }
@@ -109,7 +107,6 @@ class TaskController {
         return res.status(404).json({ error: error.message });
       }
       
-      console.error('Create task error:', error);
       res.status(500).json({ error: 'Failed to create task' });
     }
   }
@@ -157,7 +154,6 @@ class TaskController {
         return res.status(404).json({ error: error.message });
       }
       
-      console.error('Update task error:', error);
       res.status(500).json({ error: 'Failed to update task' });
     }
   }
@@ -193,7 +189,6 @@ class TaskController {
         return res.status(404).json({ error: error.message });
       }
       
-      console.error('Delete task error:', error);
       res.status(500).json({ error: 'Failed to delete task' });
     }
   }
@@ -229,7 +224,6 @@ class TaskController {
         return res.status(404).json({ error: error.message });
       }
       
-      console.error('Toggle task error:', error);
       res.status(500).json({ error: 'Failed to toggle task' });
     }
   }

@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useUserContext } from '../../context/UserContext'
 
-const LoginForm = () => {
+const SignInForm = ({ onToggleMode }) => {
   const {
     loading,
     error,
     handleLogin,
-    handleRegister,
     clearError
   } = useUserContext()
 
@@ -15,8 +14,6 @@ const LoginForm = () => {
     password: ''
   })
   
-  const [isRegisterMode, setIsRegisterMode] = useState(false)
-  const [confirmPassword, setConfirmPassword] = useState('')
   const [validationError, setValidationError] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [rememberMe, setRememberMe] = useState(false)
@@ -24,7 +21,7 @@ const LoginForm = () => {
   useEffect(() => {
     clearError()
     setValidationError('')
-  }, [isRegisterMode])
+  }, [])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -33,7 +30,6 @@ const LoginForm = () => {
       [name]: value
     }))
     
-    // Clear errors when user starts typing
     if (error) clearError()
     if (validationError) setValidationError('')
   }
@@ -54,11 +50,6 @@ const LoginForm = () => {
       return false
     }
     
-    if (isRegisterMode && formData.password !== confirmPassword) {
-      setValidationError('Passwords do not match')
-      return false
-    }
-    
     return true
   }
 
@@ -68,31 +59,13 @@ const LoginForm = () => {
     if (!validateForm()) return
     
     try {
-      if (isRegisterMode) {
-        const result = await handleRegister(formData)
-        if (result.success) {
-          alert('Registration successful! Please login.')
-          setIsRegisterMode(false)
-          setFormData({ email: '', password: '' })
-          setConfirmPassword('')
-        }
-      } else {
-        const result = await handleLogin(formData)
-        if (result.success) {
-          console.log('Login successful')
-        }
+      const result = await handleLogin(formData)
+      if (result.success) {
+        // Login successful
       }
     } catch (err) {
-      console.error('Form submission error:', err)
+      // Form submission error
     }
-  }
-
-  const toggleMode = () => {
-    setIsRegisterMode(!isRegisterMode)
-    setFormData({ email: '', password: '' })
-    setConfirmPassword('')
-    clearError()
-    setValidationError('')
   }
 
   const togglePassword = () => {
@@ -103,8 +76,8 @@ const LoginForm = () => {
     <div className="login-card">
       {/* Header */}
       <div className="login-header">
-        <h2>{isRegisterMode ? 'Create Account' : 'Sign In'}</h2>
-        <p>{isRegisterMode ? 'Join us today' : 'Access your account'}</p>
+        <h2>Sign In</h2>
+        <p>Access your account</p>
       </div>
       
       {/* Login Form */}
@@ -139,7 +112,7 @@ const LoginForm = () => {
               value={formData.password}
               onChange={handleInputChange}
               required
-              autoComplete={isRegisterMode ? 'new-password' : 'current-password'}
+              autoComplete="current-password"
             />
             <label htmlFor="password">Password</label>
             <button 
@@ -157,42 +130,6 @@ const LoginForm = () => {
           )}
         </div>
 
-        {/* Confirm Password Field (Register Mode) */}
-        {isRegisterMode && (
-          <div className="form-group">
-            <div className="input-wrapper">
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => {
-                  setConfirmPassword(e.target.value)
-                  if (validationError) setValidationError('')
-                }}
-                required
-                autoComplete="new-password"
-              />
-              <label htmlFor="confirmPassword">Confirm Password</label>
-              <span className="input-line"></span>
-            </div>
-          </div>
-        )}
-
-        {/* Form Options (Login Mode Only) */}
-        {!isRegisterMode && (
-          <div className="form-options">
-            <div className="remember-wrapper">
-              <input 
-                type="checkbox" 
-                id="remember" 
-                name="remember"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-              />
-            </div>
-          </div>
-        )}
 
         {/* General Error Display */}
         {(error || (validationError && !validationError.toLowerCase().includes('email') && !validationError.toLowerCase().includes('password'))) && (
@@ -204,38 +141,29 @@ const LoginForm = () => {
         {/* Submit Button */}
         <button type="submit" className={`login-btn btn ${loading ? 'loading' : ''}`} disabled={loading}>
           <span className="btn-text">
-            {loading ? 'Please wait...' : (isRegisterMode ? 'Create Account' : 'Sign In')}
+            {loading ? 'Please wait...' : 'Sign In'}
           </span>
           <span className="btn-loader"></span>
           <span className="btn-glow"></span>
         </button>
       </form>
 
-      {/* Divider (Login Mode Only) */}
-      {!isRegisterMode && (
-        <div className="divider">
-          <span>or</span>
-        </div>
-      )}
+      {/* Divider */}
+      <div className="divider">
+        <span>or</span>
+      </div>
 
-      {/* Sign up / Sign in Link */}
+      {/* Sign up Link */}
       <div className="signup-link">
         <p>
-          {isRegisterMode ? 'Already have an account?' : 'New here?'}{' '}
-          <a href="#" onClick={(e) => { e.preventDefault(); toggleMode(); }}>
-            {isRegisterMode ? 'Sign In' : 'Create an account'}
+          New here?{' '}
+          <a href="#" onClick={(e) => { e.preventDefault(); onToggleMode(); }}>
+            Create an account
           </a>
         </p>
       </div>
-                <div className="bg-muted relative hidden md:block">
-            <img
-              src="/placeholder.svg"
-              alt="Image"
-              className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-            />
-          </div>
     </div>
   )
 }
 
-export default LoginForm
+export default SignInForm

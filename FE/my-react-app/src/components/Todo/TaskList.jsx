@@ -1,14 +1,10 @@
 import { useState, useMemo } from "react"
 import { useTaskContext } from "../../context/TaskContext"
-import { TASK_FILTERS } from "../../constant/taskConstant"
+import { TASK_FILTERS } from "../../constant/TaskConstant"
 
 const TaskList = () => {
   const { filteredTasks, loading, error, filter } = useTaskContext()
   const [currentMonth, setCurrentMonth] = useState(new Date())
-
-  // Debug: Log tasks to see their structure
-  console.log("📋 Filtered Tasks:", filteredTasks)
-  console.log("📅 Tasks with due dates:", filteredTasks.filter(t => t.dueDate))
 
   // Calendar helper functions
   const getDaysInMonth = (date) => {

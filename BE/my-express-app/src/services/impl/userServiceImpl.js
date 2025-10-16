@@ -1,8 +1,9 @@
+import { UserService } from '../userService.js';
 import { UserRepositoryImpl } from '../../repositories/impl/userRepositoryImpl.js';
 
 const userRepo = new UserRepositoryImpl();
 
-export class UserServiceImpl {
+export class UserServiceImpl extends UserService {
   async getUsers() {
     return userRepo.findAll();
   }

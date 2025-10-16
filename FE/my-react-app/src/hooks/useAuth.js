@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { loginUser, registerUser, logoutUser } from '../api/user'
-import { USER_STATUS, STORAGE_KEYS } from '../constant/userConstant'
+import { USER_STATUS, STORAGE_KEYS } from '../constant/UserConstant'
 
 export const useAuth = () => {
   const [user, setUser] = useState(null)
@@ -77,7 +77,7 @@ export const useAuth = () => {
     try {
       await logoutUser()
     } catch (err) {
-      console.error('Logout error:', err)
+      // Logout error
     } finally {
       // Clear local state regardless of API call result
       localStorage.removeItem(STORAGE_KEYS.USER)

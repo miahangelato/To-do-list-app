@@ -1,23 +1,26 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useUserContext } from '../context/UserContext'
-import LoginForm from '../components/Auth/LoginForm'
+import SignInForm from '../components/Auth/SignInForm'
+import SignUpForm from '../components/Auth/SignUpForm'
+import Loader from '../components/Loader'
 import '../styles/LoginPage.css'
 
 const LoginPage = () => {
   const { user, isAuthenticated, loading } = useUserContext()
+  const [isRegisterMode, setIsRegisterMode] = useState(false)
 
   useEffect(() => {
     if (isAuthenticated) {
-      console.log('User is already logged in:', user)
+      // User is already logged in
     }
   }, [isAuthenticated, user])
 
+  const toggleMode = () => {
+    setIsRegisterMode(!isRegisterMode)
+  }
+
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
-      </div>
-    )
+    return <Loader />
   }
 
   // If user is authenticated, this component shouldn't render (App handles routing)
@@ -27,7 +30,11 @@ const LoginPage = () => {
 
   return (
     <div className="login-container">
-      <LoginForm />
+      {isRegisterMode ? (
+        <SignUpForm onToggleMode={toggleMode} />
+      ) : (
+        <SignInForm onToggleMode={toggleMode} />
+      )}
       
       {/* Background Effects */}
       <div className="background-effects">
